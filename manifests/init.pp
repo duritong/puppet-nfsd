@@ -20,7 +20,7 @@ define nfsd::deploy_config($source){
         owner => root,
         group => 0,
         mode => 600,
-        source => "puppet://$servername/dist/nfsdd/exports/$source",
+        source => "puppet://$servername/dist/nfsd/exports/$source",
         notify => service["nfsd"],
     }
 
@@ -28,7 +28,7 @@ define nfsd::deploy_config($source){
         owner => root,
         group => 0,
         mode => 600, 
-        source => "puppet://$servername/dist/nfsdd/hosts.allow/$source",
+        source => "puppet://$servername/dist/nfsd/hosts.allow/$source",
         notify => service["portmap"],
         require => service["portmap"],
     }
