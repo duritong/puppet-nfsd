@@ -6,6 +6,11 @@
 
 class nfsd {
     service{"nfsd": 
+        name => $operatingsystem ? {
+            centos => 'nfs',
+            debian => 'nfs-user-server',
+            default => 'nfsd',
+        },
         ensure => running, 
         require => Service["portmap"],
     }
