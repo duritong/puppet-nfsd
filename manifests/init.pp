@@ -1,10 +1,10 @@
-# modules/nfs/manifests/init.pp - manage nfs stuff
+# modules/nfsd/manifests/init.pp - manage nfsd stuff
 # Copyright (C) 2007 admin@immerda.ch
 #
 
-# modules_dir { "nfs": }
+# modules_dir { "nfsd": }
 
-class nfs {
+class nfsd {
     service{"nfsd": 
         ensure => running, 
         require => Service["portmap"],
@@ -15,12 +15,12 @@ class nfs {
     }
 }
 
-define nfs::deploy_config($source){
+define nfsd::deploy_config($source){
     file{"/etc/exports":
         owner => root,
         group => 0,
         mode => 600,
-        source => "puppet://$servername/dist/nfsd/exports/$source",
+        source => "puppet://$servername/dist/nfsdd/exports/$source",
         notify => service["nfsd"],
         require => service["nfsd"],
     }
@@ -29,7 +29,7 @@ define nfs::deploy_config($source){
         owner => root,
         group => 0,
         mode => 600, 
-        source => "puppet://$servername/dist/nfsd/hosts.allow/$source",
+        source => "puppet://$servername/dist/nfsdd/hosts.allow/$source",
         notify => service["portmap"],
         require => service["portmap"],
     }
