@@ -30,6 +30,5 @@ define nfsd::deploy_config($source){
         mode => 600, 
         source => "puppet://$servername/dist/nfsd/hosts.allow/$source",
         notify => service["portmap"],
-        require => service["portmap"],
     }
 }
