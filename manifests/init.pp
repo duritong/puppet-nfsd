@@ -22,7 +22,6 @@ define nfsd::deploy_config($source){
         mode => 600,
         source => "puppet://$servername/dist/nfsdd/exports/$source",
         notify => service["nfsd"],
-        require => service["nfsd"],
     }
 
     file{"/etc/hosts.allow":
