@@ -26,6 +26,6 @@ define nfsd::deploy_config($source){
         group => 0,
         mode => 600,
         source => "puppet://$servername/dist/nfsd/exports/$source",
-        notify => service["nfsd"],
+        notify => Service["nfsd"],
     }
 }
