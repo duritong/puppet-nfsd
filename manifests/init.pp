@@ -20,12 +20,14 @@ class nfsd {
     }
 }
 
-define nfsd::deploy_config($source){
+define nfsd::deploy_config(){
     file{"/etc/exports":
         owner => root,
         group => 0,
         mode => 600,
-        source => "puppet://$servername/dist/nfsd/exports/$source",
+        source => [ "puppet://$servername/files/nfsd/exports/${fqdn}/exports",
+                    "puppet://$servername/files/nfsd/exports/exports",
+                    "puppet://$servername/nfsd/exports/exports" ],
         notify => Service["nfsd"],
     }
 }
