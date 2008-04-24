@@ -25,9 +25,9 @@ define nfsd::deploy_config(){
         owner => root,
         group => 0,
         mode => 600,
-        source => [ "puppet://$servername/files/nfsd/exports/${fqdn}/exports",
-                    "puppet://$servername/files/nfsd/exports/exports",
-                    "puppet://$servername/nfsd/exports/exports" ],
+        source => [ "puppet://$server/files/nfsd/exports/${fqdn}/exports",
+                    "puppet://$server/files/nfsd/exports/exports",
+                    "puppet://$server/nfsd/exports/exports" ],
         notify => Service["nfsd"],
     }
 }
