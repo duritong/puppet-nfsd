@@ -1,33 +1,47 @@
 # modules/nfsd/manifests/init.pp - manage nfsd stuff
 # Copyright (C) 2007 admin@immerda.ch
+# GPLv3
+# adpated by  Puzzle ITC - haerry+puppet(at)puzzle.ch
 #
+# This module manages an nfs server. to mange an nfs 
+# client please look into the module nfs
 
 # modules_dir { "nfsd": }
 
 class nfsd {
-    service{"nfsd": 
-        name => $operatingsystem ? {
-            centos => 'nfs',
-            debian => 'nfs-user-server',
-            default => 'nfsd',
-        },
+    case $operatingsystem {
+        debian: { include nfsd::debian }
+        default: { include nfsd::base }
+    }
+
+    if $selinux {
+        include nfsd::selinux
+    }
+}
+
+class nfsd::base {
+    # we configure every nfs server as nfs client
+    include nfs 
+    
+    service{"nfs": 
         ensure => running, 
         require => Service["portmap"],
-    }
-    service{"portmap": 
-        ensure => running, 
-        hasrestart => true,
+        hasstatus => true,
     }
 }
 
 define nfsd::deploy_config(){
     file{"/etc/exports":
-        owner => root,
-        group => 0,
-        mode => 600,
         source => [ "puppet://$server/files/nfsd/exports/${fqdn}/exports",
                     "puppet://$server/files/nfsd/exports/exports",
                     "puppet://$server/nfsd/exports/exports" ],
         notify => Service["nfsd"],
+        owner => root, group => 0, mode => 600;
+    }
+}
+
+class nfsd::debian inherits nfsd::base {
+    Service[nfsd]{
+        name => 'nfs-user-server',
     }
 }
