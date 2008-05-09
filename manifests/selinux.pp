@@ -3,7 +3,7 @@
 class nfsd::selinux {
     case $operatingsystem {
         gentoo: { include nfsd::selinux::gentoo }
-        default: { notice("No selinux stuff yet defined for your operatingsystem") }
+        default: { info("No selinux stuff yet defined for your operatingsystem") }
     }
 }
 
