@@ -21,10 +21,6 @@ class nfsd {
         debian: { include nfsd::debian }
         default: { include nfsd::base }
     }
-
-    if $selinux {
-        include nfsd::selinux
-    }
 }
 
 class nfsd::base {
