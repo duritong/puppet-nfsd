@@ -3,8 +3,8 @@ class nfsd::base {
     include ::nfs 
 
     file{"/etc/exports":
-        source => [ "puppet://$server/files/nfsd/exports/${fqdn}/exports",
-                    "puppet://$server/files/nfsd/exports/exports",
+        source => [ "puppet://$server/modules/site-nfsd/exports/${fqdn}/exports",
+                    "puppet://$server/modules/site-nfsd/exports/exports",
                     "puppet://$server/modules/nfsd/exports/exports" ],
         notify => Service["nfs"],
         owner => root, group => 0, mode => 600;
