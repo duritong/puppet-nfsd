@@ -6,21 +6,21 @@
 # Marcel Härry haerry+puppet(at)puzzle.ch
 # Simon Josi josi+puppet(at)puzzle.ch
 #
-# This program is free software; you can redistribute 
-# it and/or modify it under the terms of the GNU 
-# General Public License version 3 as published by 
+# This program is free software; you can redistribute
+# it and/or modify it under the terms of the GNU
+# General Public License version 3 as published by
 # the Free Software Foundation.
 #
-# This module manages an nfs server. to mange an nfs 
+# This module manages an nfs server. to mange an nfs
 # client please look into the module nfs
 
 class nfsd {
-    case $operatingsystem {
-        debian: { include nfsd::debian }
-        centos: { include nfsd::centos }
-        default: { include nfsd::base }
-    }
-    if $use_shorewall {
-      include shorewall::rules::nfsd
-    }
+  case $::operatingsystem {
+    debian: { include nfsd::debian }
+    centos: { include nfsd::centos }
+    default: { include nfsd::base }
+  }
+  if hiera('use_shorewall',false) {
+    include shorewall::rules::nfsd
+  }
 }
