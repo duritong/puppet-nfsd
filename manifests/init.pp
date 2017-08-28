@@ -18,8 +18,8 @@ class nfsd(
   $use_shorewall = false,
 ) {
   case $::operatingsystem {
-    debian: { include nfsd::debian }
-    centos: { include nfsd::centos }
+    'Debian': { include nfsd::debian }
+    'CentOS': { include nfsd::centos }
     default: { include nfsd::base }
   }
   if $use_shorewall {
