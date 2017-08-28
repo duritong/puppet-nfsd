@@ -14,13 +14,15 @@
 # This module manages an nfs server. to mange an nfs
 # client please look into the module nfs
 
-class nfsd {
+class nfsd(
+  $use_shorewall = false,
+) {
   case $::operatingsystem {
     debian: { include nfsd::debian }
     centos: { include nfsd::centos }
     default: { include nfsd::base }
   }
-  if hiera('use_shorewall',false) {
+  if $use_shorewall {
     include shorewall::rules::nfsd
   }
 }
